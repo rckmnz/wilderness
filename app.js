@@ -23,8 +23,8 @@ const
 //=============================
 // DB SETUP
 //=============================
-mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
-
+//mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+mongoose.connect("mongodb://rckmnz:0907792@ds121896.mlab.com:21896/yelpcamp", {useMongoClient: true});
 //=============================
 // APP SETUP
 //=============================
