@@ -16,17 +16,41 @@ router.get("/", (req, res) => {
 
 // INDEX - show all campgrounds
 router.get("/campgrounds", (req, res) => {
-    // Get all campgrounds from DB
-    Campground.find({}, (err, allCampgrounds) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("campgrounds/index", {
-                campgrounds: allCampgrounds,
-                currentUser: req.user
-            });
-        }
-    });
+    let noMatch;
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), "gi");
+        // Get all campgrounds from DB
+        Campground.find({
+            name: regex
+        }, (err, allCampgrounds) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                if (allCampgrounds.length < 1) {
+                    noMatch = "No Campgrounds match that query, please try again!"
+                }
+                res.render("campgrounds/index", {
+                    campgrounds: allCampgrounds,
+                    currentUser: req.user,
+                    noMatch: noMatch
+                });
+            }
+        });
+    } else {
+        // Get all campgrounds from DB
+        Campground.find({}, (err, allCampgrounds) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("campgrounds/index", {
+                    campgrounds: allCampgrounds,
+                    currentUser: req.user,
+                    noMatch: noMatch
+                });
+            }
+        });
+    }
 });
 
 
@@ -41,7 +65,13 @@ router.post("/campgrounds", middleware.isLoggedIn, (req, res) => {
         id: req.user._id,
         username: req.user.username
     };
-    let newCampground = {name, price, image, description: desc, author};
+    let newCampground = {
+        name,
+        price,
+        image,
+        description: desc,
+        author
+    };
     // Create a new campground and save to DB
     Campground.create(newCampground, (err, newlyCreated) => {
         if (err) {
@@ -66,28 +96,31 @@ router.get("/campgrounds/:id", (req, res) => {
     Campground.findById(req.params.id)
         .populate("comments")
         .exec((err, foundCampground) => {
-                if (err) {
-                    req.flash("error", "Something went wrong!");
-                    console.log(err);
-                } else {
-                    console.log(foundCampground);
-                    // Render show template with that campground
-                    res.render("campgrounds/show", {campground: foundCampground});
-                }
+            if (err) {
+                req.flash("error", "Something went wrong!");
+                console.log(err);
+            } else {
+                console.log(foundCampground);
+                // Render show template with that campground
+                res.render("campgrounds/show", {
+                    campground: foundCampground
+                });
             }
-        );
+        });
 });
 
 //EDIT CAMPGROUND ROUTE
 router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, (req, res) => {
-        Campground.findById(req.params.id, (err, foundCampground) => {
-            if (err) {
-                req.flash("error", "Something went wrong!");
-                res.redirect("back");
-            } else {
-                    res.render("campgrounds/edit", {campground: foundCampground});
-            }
-        });
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        if (err) {
+            req.flash("error", "Something went wrong!");
+            res.redirect("back");
+        } else {
+            res.render("campgrounds/edit", {
+                campground: foundCampground
+            });
+        }
+    });
 });
 
 //UPDATE CAMPGROUND ROUTE
@@ -116,5 +149,8 @@ router.delete("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, (req
     });
 });
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;
