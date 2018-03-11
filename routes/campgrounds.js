@@ -105,7 +105,7 @@ router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), (req,
         id: req.user._id,
         username: req.user.username
     };
-    // Get geolocation
+    // GEOCODER
     geocoder.geocode(req.body.location, (err, data) => {
         if (err || !data.length) {
             req.flash('error', 'Invalid address');
@@ -125,16 +125,23 @@ router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), (req,
             lat,
             lng
         };
-        // add cloudinary url for the image to the campground object under image property
-        cloudinary.uploader.upload(req.file.path, (result) => {
+        //CLOUDINARY
+        cloudinary.v2.uploader.upload(req.file.path, (err, result) =>{ 
+            if (err) {
+                req.flash('error', err.message);
+                return res.redirect('back');
+            }
+            // add cloudinary url for the image to the campground object under imag property
             req.body.campground.image = result.secure_url;
+            // add image's public_id to campground object
+            req.body.campground.image_id = result.public_id;
             // add author to campground
             req.body.campground.author = {
                 id: req.user._id,
                 username: req.user.username
             }
             // Create a new campground and save to DB
-            Campground.create(newCampground, (err, campground) => {
+            Campground.create(req.body.campground, (err, campground) => {
                 if (err) {
                     req.flash('error', err.message);
                     return res.redirect('back');
