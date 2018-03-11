@@ -218,7 +218,7 @@ router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, (req, res) =
 });
 
 // DESTROY CAMPGROUND ROUTE
-router.delete("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, (req, res) => {
+router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findByIdAndRemove(req.params.id, (err, deletedCampground) => {
         if (err) {
             req.flash("error", "Something went wrong!");
