@@ -25,6 +25,7 @@ const
 //=============================
 //mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
 mongoose.connect("mongodb://rckmnz:0907792@ds121896.mlab.com:21896/yelpcamp", {useMongoClient: true});
+
 //=============================
 // APP SETUP
 //=============================
@@ -35,6 +36,9 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 // seedDB(); //Seed the DB
+
+// Moment.js
+app.locals.moment = require('moment');
 
 //=============================
 // PASSPORT SETUP

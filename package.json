@@ -17,6 +17,7 @@
     "express-session": "^1.15.6",
     "locus": "^2.0.1",
     "method-override": "^2.3.10",
+    "moment": "^2.21.0",
     "mongoose": "^4.13.0",
     "node-geocoder": "^3.22.0",
     "passport": "^0.4.0",
