@@ -140,7 +140,7 @@ router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), (req,
                     return res.redirect('back');
                 }
                 // Redirect back to campgrounds page
-                res.redirect("/campgrounds" + campground.id);
+                res.redirect("/campgrounds");
             });
         });
     });
