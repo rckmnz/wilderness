@@ -57,7 +57,9 @@
 </div>
 
 <script>
+console.log ("before maps initiation");
   function initMap() {
+      console.log ("after maps initiation");
     var lat = <%= campground.lat %>;
     var lng = <%= campground.lng %>;
     var center = {lat: lat, lng: lng };

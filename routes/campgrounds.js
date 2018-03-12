@@ -111,20 +111,11 @@ router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), (req,
             req.flash('error', 'Invalid address');
             return res.redirect('back');
         }
-        let lat = data[0].latitude;
-        let lng = data[0].longitude;
-        let location = data[0].formattedAddress;
 
-        let newCampground = {
-            name,
-            price,
-            image,
-            description: desc,
-            author,
-            location,
-            lat,
-            lng
-        };
+        req.body.campground.lat = data[0].latitude;
+        req.body.campground.lng = data[0].longitude;
+        req.body.campground.location = data[0].formattedAddress;
+        
         //CLOUDINARY
         cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
             if (err) {
@@ -141,7 +132,7 @@ router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), (req,
                 username: req.user.username
             }
             // Create a new campground and save to DB
-            Campground.create(req.body.campground, (err, campground) => {
+            Campground.create(req.body.campground, (err, createdCampground) => {
                 if (err) {
                     req.flash('error', err.message);
                     return res.redirect('back');
@@ -200,17 +191,10 @@ router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, upload.singl
             req.flash('error', 'Invalid address');
             return res.redirect('back');
         }
-        let lat = data[0].latitude;
-        let lng = data[0].longitude;
-        let location = data[0].formattedAddress;
-        let newData = {
-            name: req.body.name,
-            image: req.body.image,
-            description: req.body.description,
-            location: location,
-            lat: lat,
-            lng: lng
-        };
+        req.body.campground.lat = data[0].latitude;
+        req.body.campground.lng = data[0].longitude;
+        req.body.campground.location = data[0].formattedAddress;
+
         // Cloudinary
         // if a new file has been uploaded
         console.log("REQ.FILE", req.file);
