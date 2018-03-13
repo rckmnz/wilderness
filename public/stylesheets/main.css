@@ -1,13 +1,8 @@
-.thumbnail{
-    padding: 0;
-}
-
 .delete-form{
-    display: inline;
+    display: inline-block;
 }
 
 /* Google Maps */
-
 #map {
     height: 400px;
     width: 100%;
