@@ -42,23 +42,25 @@
                                     <div class="float-right">
                                         <p><%= moment(campground.createdAt).fromNow() %></p>
 
-                            <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                        <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                         <div class="float-right">
                                             <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
                                             <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                                 <button class="btn btn-danger" value="Delete">Delete</button>
                                             </form>
-                            <% } %>     </div>
+                                        </div>
+                                        <% } %>     
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <% }) %>
+                    <% }) %>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 
 
 <script>
