@@ -13,6 +13,15 @@ body {
     color: #ffffff;
 }
 
+#searchForm {
+    margin: 0 auto;
+    width: 350px;
+}
+
+#searchBar{
+    margin: 10px;
+}
+
 .slideshow {
     position: fixed;
     width: 100%;
