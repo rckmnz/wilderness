@@ -2,14 +2,15 @@
 
 
     <header class="jumbotron">
-        <div class="container">
-            <h1>Welcome to Evergreen!</h1>
-            <p>View our hand-picked campgrounds from all over the world</p>
+        <div class="text-center">
+            <h1 class="display-4">Find your Wild!</h1>
+            <p class="lead">View our hand-picked campgrounds from all over the world</p>
+            <hr>
             <p><a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Campground</a></p>
-                <form action="/campgrounds" method="GET" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" name="search" placeholder="Find a Campground!" class="form-control">
-                        <input type="submit" value="Search" class="btn btn-default">
+                <form action="/campgrounds" method="GET" class="form-inline d-flex justify-content-center">
+                    <div class="form-group search">
+                        <input type="text" name="search" placeholder="Find a Campground!" class="form-control searchBar">
+                        <input type="submit" value="Search" class="btn btn-dark">
                     </div>
                 </form>
         </div>
@@ -20,10 +21,10 @@
             <% if (noMatch) { %>
             <h5><%= noMatch %></h5>
             <% } else { %>
-            <h5>Our Most Popular Campgrounds!</h5>
+            <h4>Our Most Popular Campgrounds!</h4>
         </div>
         <% campgrounds.forEach(campground => { %>
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
             <div class="card">
                 <img class="card-img-top" src="<%= campground.image %>" alt="<%= campground.name %>">
                 <div class="card-body">
