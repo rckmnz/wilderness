@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
 <head>
     <title>Wilderness</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/landing.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
@@ -27,10 +29,10 @@
             <h1>Wilderness</h1>
             <h3>Join our community of oudoors lovers!<h3>
             <a href="/campgrounds" class="btn btn-lg btn-primary">View All Campgrounds</a>
-                <form action="/campgrounds" method="GET">
-                    <div class="form-group form-inline" id="searchForm">
-                        <input type="text" name="search" placeholder="Find a Campground!" class="form-control" "form-inline" id="searchBar">
-                        <input type="submit" value="Search" class="btn btn-dark">
+                <form action="/campgrounds" method="GET" class="form-inline">
+                    <div class="form-group" id="searchForm">
+                        <input type="text" name="search" placeholder="Find a Campground!" class="form-control" id="searchBar">
+                        <input type="submit" value="Search" class="btn btn-dark" id="searchBtn">
                     </div>
                 </form>
         </div>
